@@ -1,30 +1,28 @@
-# Generic OSD32MP1 Support
+# Generic LicheePi Zero Support
 
-[![CircleCI](https://circleci.com/gh/nerves-project/nerves_system_osd32mp1.svg?style=svg)](https://circleci.com/gh/nerves-project/nerves_system_osd32mp1)
-[![Hex version](https://img.shields.io/hexpm/v/nerves_system_osd32mp1.svg "Hex version")](https://hex.pm/packages/nerves_system_osd32mp1)
+<!-- [![Hex version](https://img.shields.io/hexpm/v/nerves_system_licheepi_zero.svg "Hex version")](https://hex.pm/packages/nerves_system_licheepi_zerolicheepi_zero) -->
 
 This is the base Nerves System configuration for the
-[OSD32MP1-BRK](https://octavosystems.com/octavo_products/osd32mp1-brk/)
+[LicheePi Zero](https://www.licheepizero.us/)
 
-![OSD32MP1-BRK](assets/images/osd32mp1-brk.png)
+![LicheePi Zero](assets/images/licheepi_zero.jpg)
 
-| Feature              | Description                     |
-| -------------------- | ------------------------------- |
-| CPU                  | up to 800 mHz ARM dual Cortex-A7 |
-| Memory               | up to 1 GB DRAM                 |
-| Storage              | MicroSD card                    |
-| Linux Kernel         | 5.4                             |
-| IEx terminal         | UART `ttySTM0`                  |
-| GPIO, I2C, SPI       | Yes - [Elixir Circuits](https://github.com/elixir-circuits) |
-| ADC                  | Yes                             |
-| PWM                  | Yes, but no Elixir support      |
-| UART                 | ttySTM0 + more via device tree overlay |
-| Coprocessor          | embedded M4 STM32               |
-| Camera               | None                            |
-| Ethernet             | No                              |
-| WiFi                 | Requires USB WiFi dongle        |
-| Bluetooth            | No                              |
-| Audio                | No                              |
+| Feature        | Description                                                 |
+|----------------|-------------------------------------------------------------|
+| CPU            | Allwinner V3S, up to 1.2 GHz ARM single Cortex-A7           |
+| Memory         | up to 64 MiBi DRAM                                          |
+| Storage        | MicroSD card, optional SPI FLASH                            |
+| Linux Kernel   | 5.15                                                        |
+| IEx terminal   | UART0                                                       |
+| GPIO, I2C, SPI | Yes - [Elixir Circuits](https://github.com/elixir-circuits) |
+| ADC            | No                                                          |
+| LRADC          | Yes                                                         |
+| PWM            | Yes, but no Elixir support                                  |
+| UART           | 2                                                           |
+| Camera         | None                                                        |
+| Ethernet       | PHY, Requries                                               |
+| WiFi           | Requires SDIO or USB WiFi dongle                            |
+| Audio          | Yes                                                         |
 
 # WARNING
 
@@ -34,7 +32,7 @@ to be made
 # Using
 
 The most common way of using this Nerves System is create a project with `mix
-nerves.new` and to export `MIX_TARGET=osd32mp1`. See the [Getting started
+nerves.new` and to export `MIX_TARGET=licheepi_zero`. See the [Getting started
 guide](https://hexdocs.pm/nerves/getting-started.html#creating-a-new-nerves-app)
 for more information.
 
@@ -42,33 +40,9 @@ If you need custom modifications to this system for your device, clone this
 repository and update as described in [Making custom
 systems](https://hexdocs.pm/nerves/customizing-systems.html).
 
-## Boot Jumpers
+# Supported WiFi Devices
 
-The boot jumpers on the OSD32MP1-BRK board should be set like this to boot from
-Micro SDCard. Orient the board so that the USB connector is to the right of the
-switch.
-
-|label| | |
-|-----|-|-|
-|0    | |X|
-|1    |X| |
-|2    | |X|
-|WP   |X| |
-
-# Supported USB WiFi Devices
-
-The base image includes drivers and firmware for Ralink RT53xx (rt2800usb
-driver) and RealTek RTL8712U (r8712u driver) devices.
-
-We are still working out which subset of all possible WiFi dongles to support in
-our images. At some point, we may have the option to support all dongles and
-selectively install modules at packaging time, but until then, these drivers and
-their associated firmware blobs add significantly to Nerves release images.
-
-If you are unsure what driver your WiFi dongle requires, run Debian and
-configure WiFi for your device. At a shell prompt, run lsmod to see which
-drivers are loaded. Running dmesg may also give a clue. When using dmesg,
-reinsert the USB dongle to generate new log messages if you don't see them.
+_WIP_
 
 ## Provisioning devices
 
@@ -115,4 +89,3 @@ provisioning.conf file location by setting the environment variable
 `NERVES_PROVISIONING=/path/to/provisioning.conf`. The default provisioning.conf
 will set the `nerves_serial_number`, if you override the location to this file,
 you will be responsible for setting this yourself.
-
